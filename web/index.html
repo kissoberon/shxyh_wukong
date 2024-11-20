@@ -1,0 +1,198 @@
+<html>
+<head>
+  <title>神话西游汇</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <script>
+    window.onload = function () {
+      var map = L.map('map').setView([0, 0], 1);
+
+      // 创建一个图片图层
+      var imageUrl = 'images/map.png';
+      var imageBounds = [[-90, -180], [90, 180]];
+      var imageLayer = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+      // 添加Leaflet的缩放控制
+      L.control.zoom({
+        position: 'topright'
+      }).addTo(map);
+
+      var iconArray = [];
+      var markers = [];
+
+      // 封装创建带有弹出框的标记的函数
+      function createMarkerWithPopup(coordinate, icon, popupContent) {
+        var marker = L.marker(coordinate, {icon: icon}).addTo(map);
+        marker.bindPopup(popupContent);
+
+        // 添加事件监听器，根据不同角色设置不同的跳转链接
+        marker.on('popupopen', function () {
+          var button = document.getElementById('changeContentButton');
+          var popupTitle = popupContent.match(/<h1>(.*?)<\/h1>/)[1]; // 通过正则表达式提取<h1>标签内的角色名
+
+          if (popupTitle === "广智") {
+            button.onclick = function () {
+              window.open('guangzhi.html', '_blank');
+            };
+          } else if (popupTitle === "广谋") {
+            button.onclick = function () {
+              window.open('guangmou.html', '_blank');
+            };
+          } else if (popupTitle === "白衣秀士") {
+            button.onclick = function () {
+              window.open('baiyi.html', '_blank');
+            };
+          } else if (popupTitle === "灵虚子") {
+            button.onclick = function () {
+              window.open('lingxuzi.html', '_blank');
+            };
+          } else if (popupTitle === "金池长老") {
+            button.onclick = function () {
+              window.open('jingchi.html', '_blank');
+            };
+          } else if (popupTitle === "黑风大王") {
+            button.onclick = function () {
+              window.open('heifong.html', '_blank');
+            };
+          } else if (popupTitle === "黑熊精") {
+            button.onclick = function () {
+              window.open('heixiong.html', '_blank');
+            };
+          } else if (popupTitle === "赤髯龙") {
+            button.onclick = function () {
+              window.open('chirang.html', '_blank');
+            };
+          }
+        });
+
+        return marker;
+      }
+
+      // 广智
+      var icon1 = L.icon({
+        iconUrl: 'images/1.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon1);
+      var popupContent1 = `
+       <h1>广智</h1>
+       <p>[打法心得]<br/>注意躲避冲刺技能，如果被点燃可以连续翻滚来灭火，火有持续伤害<br/>[奖励]<br/>法术-赤潮，神通-变化广智</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker1 = createMarkerWithPopup([-12, -76], iconArray[0], popupContent1);
+      markers.push(marker1);
+
+      // 广谋
+      var icon2 = L.icon({
+        iconUrl: 'images/2.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon2);
+      var popupContent2 = `
+       <h1>广谋</h1>
+       <p>[打法心得]<br/>转棍化解远程攻击，可以点出异常状态的加点降低难度<br/>[奖励]<br/>广谋的精魄</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker2 = createMarkerWithPopup([70, 20], iconArray[1], popupContent2);
+      markers.push(marker2);
+
+      // 白衣秀士
+      var icon3 = L.icon({
+        iconUrl: 'images/3.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon3);
+      var popupContent3 = `
+       <h1>白衣秀士</h1>
+       <p>[打法心得]<br/>注意，这个BOSS有2条血，会二阶段变身。推荐打法：拉远距离，等白衣秀士突进攻击，闪避之后轻攻击两三下后，继续拉开距离反复如此。补充，一阶段先劈棍蓄力三段换血，然后定身打一套，变身广智打一套，不失误就转二阶段了二阶段变成蛇只会地面，站得高打不住你，只有剑气能刮你所以立棍教他做人，立棍蓄力一段之后，剑气也打不到你，无脑轮椅过建议打之前改加点立棍和气力条，挨打掉体力<br/>[奖励]<br/>武器升级材料【玉垂牙】</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker3 = createMarkerWithPopup([-5,35], iconArray[2], popupContent3);
+      markers.push(marker3);
+
+      // 凌虚子
+      var icon4 = L.icon({
+        iconUrl: 'images/4.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon4);
+      var popupContent4 = `
+       <h1>灵虚子</h1>
+       <p>[打法心得]<br/>弱火伤，变身广智后狠狠鞭打<br/>[奖励]<br/>【头冠】白脸子、【稀有材料】玲珑内丹</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker4 = createMarkerWithPopup([-30,-55], iconArray[3], popupContent4);
+      markers.push(marker4);
+
+      // 金池长老
+      var icon5 = L.icon({
+        iconUrl: 'images/5.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon5);
+      var popupContent5 = `
+       <h1>金池长老</h1>
+       <p>[出现条件]<br/>敲响地图的三个钟就可以打这个BOSS。<br/>[打法心得]<br/>当他升到空中时注意，四周会有很多僵尸向金池长老走去，赶紧消灭这些僵尸，不然金池长老会靠僵尸回血。（你攻击僵尸也会给你回血）<br/>[奖励]<br/>法宝【避火罩】</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker5 = createMarkerWithPopup([-32,-34], iconArray[4], popupContent5);
+      markers.push(marker5);
+
+      // 黑风大王
+      var icon6 = L.icon({
+        iconUrl: 'images/6.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon6);
+      var popupContent6 = `
+       <h1>黑风大王</h1>
+       <p>[打法心得]<br/>BOSS会化为雾气，注意躲避，不急。定身术可将boss从雾气打出来<br/>[奖励]<br/>【法术】聚形散气</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker6 = createMarkerWithPopup([-41,72], iconArray[5], popupContent6);
+      markers.push(marker6);
+
+      // 黑熊精
+      var icon7 = L.icon({
+        iconUrl: 'images/7.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon7);
+      var popupContent7 = `
+       <h1>黑熊精</h1>
+       <p>[打法心得]<br/>黑熊精二阶段会使用火焰攻击，务必先去获得辟火罩后再来打，能简单非常多<br/>[奖励]<br/>击败黑熊精后获得“根器-眼看喜”，效果三选一，在土地庙洗点时也可以更换根器效果。以及其他大量优质材料奖励。通关后的画卷放大之后会有对话来解释人物背景。</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker7 = createMarkerWithPopup([-78,120], iconArray[6], popupContent7);
+      markers.push(marker7);
+
+      // 赤髯龙
+      var icon8 = L.icon({
+        iconUrl: 'images/8.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      iconArray.push(icon8);
+      var popupContent8 = `
+       <h1>赤髯龙</h1>
+       <p>[出现条件]<br/>需要在第二章获取了“龙鳞”后，回来对着瀑布互动后触发<br/>[打法心得]<br/>弱点为背上的雷光炉，重击敲倒地后，就在他身右侧轻攻击扫他的炉，能造成大量伤害，基本上3次倒地就打死了<br/>[奖励]<br/>麟棍·蟠龙图纸 博山炉 掣电尾 龙珠</p>
+       <button id="changeContentButton">详细查看</button>
+   `;
+      var marker8 = createMarkerWithPopup([-30,-85], iconArray[7], popupContent8);
+      markers.push(marker8);
+    };
+  </script>
+</head>
+<body>
+<div id="map" style="width: 100%; height: 800px;"></div>
+</body>
+</html>
